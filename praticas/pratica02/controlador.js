@@ -1,0 +1,1 @@
+const Contato = require();
