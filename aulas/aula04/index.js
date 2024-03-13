@@ -5,11 +5,13 @@ const app = express();
 // middleware integrado
 app.use(express.json());
 
+//widdleware app
 app.use(function(req, res, next){
     console.log("Data ", new Date());
     next();
 });
 
+//middleware rota
 app.get("/", function(req, res) {
     console.log("URL=", req.url);
     console.log("Metodo=", req.method);
