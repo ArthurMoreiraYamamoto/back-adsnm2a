@@ -11,6 +11,13 @@ describe('Teste da API /produtos', function() {
     expect(response.headers['content-type']).toMatch(/json/);
   })
 
+  test('Deve retornar 201 e um JSON no POST /produtos', async () => {
+    const response = await request.post("/produtos")
+      .send({nome: "Banana", preco: 15.00});
+    expect(response.status).toBe(201);
+    expect(response.headers['content-type']).toMatch(/json/);
+  })
+
   test('Deve retornar 200 e um JSON no GET /produtos/id', async () => {
     const response = await request.get("/produtos/1");
     expect(response.status).toBe(200);
@@ -18,15 +25,8 @@ describe('Teste da API /produtos', function() {
   })
 
   test('Deve retornar 404 e um JSON no GET /produtos/id', async () => {
-    const response = await request.get("/produtos/10000");
+    const response = await request.get("/produtos/100000");
     expect(response.status).toBe(404);
-    expect(response.headers['content-type']).toMatch(/json/);
-  })
-
-  test('Deve retornar 201 e um JSON no POST /produtos', async () => {
-    const response = await request.post("/produtos")
-      .send({nome: "Banana", preco: 15.00});
-    expect(response.status).toBe(201);
     expect(response.headers['content-type']).toMatch(/json/);
   })
 
