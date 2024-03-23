@@ -6,7 +6,7 @@ const listarTodos = (req, res) =>{
 
 const exibir = (req, res) => {
     const {produtoEncontrado} = req;
-    req.json(produtoEncontrado)
+    res.json(produtoEncontrado);
 }
 
 const buscarPeloId = (req, res, next) =>{
@@ -16,21 +16,31 @@ const buscarPeloId = (req, res, next) =>{
         req.produtoEncontrado = produtoEncontrado;
         next()
     } else {
-        res.status(404).json({msg: "Produto não encontrado"});
+        res.status(404).json({msg: "Produto nao encontrado"});
     }
+}
+
+const validarDados = (req, res, next) => {
+    const{ nome, preco} = req.body;
+    if (nome && preco) {
+        next();
+    } else {
+        res.status(422).json({msg:"Nome e preco obrigatorio"});
+    }
+
 }
 
 const criar = (req, res) =>{
     const { nome, preco } = req.body;
-    const produtoNovo = {id: produtos.length + 1, nome, preco}
+    const produtoNovo = {id: produtos.length + 1, nome, preco};
     produtos.push(produtoNovo);
-    res.status(201).json(produtoNovo)
+    res.status(201).json(produtoNovo);
 
 }
 
 const atualizar = (req, res) =>{
     const { nome, preco} = req.body
-    const produtoEncontrado = req;
+    const {produtoEncontrado} = req;
     produtoEncontrado.nome = nome;
     produtoEncontrado.preco = preco;
     res.json(produtoEncontrado);
@@ -42,7 +52,7 @@ const remover = (req, res) =>{
     if (posicao >= 0) {
         produtos.splice(posicao, 1);
         res.status(204).end();
-    } 
+    }
 }
 
-module.exports = {listarTodos, buscarPeloId, exibir, criar, atualizar, remover}
+module.exports = {listarTodos, buscarPeloId, validarDados, exibir, criar, atualizar, remover}
