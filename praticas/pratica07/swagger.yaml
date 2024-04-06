@@ -1,0 +1,22 @@
+openapi: 3.0.0
+info:
+  title: MINHA API PRATICA
+  description: API REST com Express
+  version: 0.1.0
+servers:
+  - servers: http://localhost:3000
+    description: Ambiente de desenvolvimento
+tags:
+  - name: produtos
+paths:
+  /produtos:
+    get:
+      tag:
+        - produtos:
+      responses:
+        200:
+          description:
+          content:
+    post:
+  /produtos/{produtoId}:
+components:
