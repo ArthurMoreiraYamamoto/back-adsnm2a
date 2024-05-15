@@ -34,4 +34,9 @@ describe('API Loja Virtual', () => {
     expect(response.status).toBe(200);
     expect(response.type).toBe('application/json')
    })
+   test("Deve retornar 404 e um JSON no GET /produto/id", async() => {
+    const response = await request.get("/produtos/662853ac81b115519879fa35");
+    expect(response.status).toBe(404);
+    expect(response.type).toBe("application/json");
+   })
 });

@@ -1,43 +1,62 @@
 openapi: 3.0.0
 info:
-  title: API loja Virtual
+  title: API Loja Virtual
   version: 0.0.1
 tags:
   - produtos
 paths:
- /produtos:
-   post:
-    tags:
-      - produtos
-    requestBody:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Produto'
-    responses:
-      201:
+  /produtos:
+    post:
+      tags:
+        - produtos
+      requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Produto'
-      422:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Mensagem'
-   get:
-    tags:
-      - produtos
-    responses:
-      200:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ArrayOfProdutos'
+      responses:
+        201:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Produto'
+        422:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mensagem'
+    get:
+      tags:
+        - produtos
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayOfProdutos'
+  /produtos/{id}:
+    get:
+      tags:
+        - produtos
+      parameters:
+        - in: path
+          type: string
+          name: id
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Produto'
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mensagem'
 components:
   schemas:
     ArrayOfProdutos:
-      type:
+      type: array
       items:
         $ref: '#/components/schemas/Produto'
     Produto:
@@ -52,4 +71,3 @@ components:
       properties:
         msg:
           type: string
-
