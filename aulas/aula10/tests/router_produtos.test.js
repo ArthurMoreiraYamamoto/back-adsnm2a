@@ -7,12 +7,12 @@ const request = supertest(app);
 let id = null
 
 describe('API Loja Virtual', () => {
-    // test('Deve retornar 201 e um JSON no POST /produto', async () => {
-    //    const response = await request.post('/produtos').send({nome: "pao de queijo", preco: 20.0});
-    //     expect(response.status).toBe(201);
-    //     expect(response.type).toBe('application/json');
-    //     id = response.body._id;
-    // });
+    test('Deve retornar 201 e um JSON no POST /produto', async () => {
+       const response = await request.post('/produtos').send({nome: "pao de queijo", preco: 20.0});
+        expect(response.status).toBe(201);
+        expect(response.type).toBe('application/json');
+        id = response.body._id;
+    });
 
    test('Deve retornar 422 e um JSON no POST /produtos', async() => {
     const response = await request.post("/produtos").send({});
@@ -39,4 +39,29 @@ describe('API Loja Virtual', () => {
     expect(response.status).toBe(404);
     expect(response.type).toBe("application/json");
    })
+   test("Deve retornar 200 e um JSON no PUT /produtos/id", async () => {
+    const response = await request.put(`/produtos/${id}`).send({nome: "Banana da terra", preco: 5.8});
+    expect(response.status).toBe(200);
+    expect(response.type).toBe("application/json");
+  });
+  test("Deve retornar 404 e um JSON no PUT /produto/id", async() => {
+    const response = await request.put("/produtos/662853ac81b115519879fa50");
+    expect(response.status).toBe(404);
+    expect(response.type).toBe("application/json");
+   })
+   test('Deve retornar 422 e um JSON no PUT /produtos', async() => {
+    const response = await request.put(`/produtos/${id}`).send({});
+    expect(response.status).toBe(422);
+    expect(response.type).toBe("application/json");
+   });
+   test('Deve retornar 204 e sem corpo no DELETE /produtos/id', async() => {
+    const response = await request.delete(`/produtos/${id}`);
+    expect(response.status).toBe(204);
+    expect(response.type).toBe("");
+   });
+   test('Deve retornar 404 e um JSON no DELETE /produtos/id', async() => {
+    const response = await request.delete(`/produtos/${id}`);
+    expect(response.status).toBe(404);
+    expect(response.type).toBe("application/json");
+   });
 });
